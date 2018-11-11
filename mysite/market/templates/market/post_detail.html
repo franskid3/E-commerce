@@ -1,0 +1,36 @@
+{% extends "market/base.html" %}
+{% block content %}
+<div class="container">
+<div class="row">
+
+<div class="col-lg-4 col-md-12 mb-4">
+
+
+            <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+            <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+            <div class="view overlay z-depth-1-half">
+                <img src="{{ post.images.url }}" class="img-fluid">
+                <a href="{% url 'post-detail' post.id %}">
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+            
+            <h6 class="my-4 font-weight-bold">{{ post.price }}</h6>
+            <h6><a class="my-4 font-weight-bold" href="{% url 'post-detail' post.id %} ">{{ post.name }}</a></h6>
+
+            </div>
+            <div class="col-lg-4 col-md-12 mb-6">
+                <h6 class="my-4 font-weight-bold">{{ post.description }}</h6>
+            </div>
+            
+            <!--Grid column-->
+</div>
+            {% if object.author == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+            </div>
+            {% endif %}
+</div>
+{% endblock content %}
+

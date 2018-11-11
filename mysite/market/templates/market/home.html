@@ -1,0 +1,113 @@
+{% extends "market/base.html" %}
+    {% block content %}
+    <!--Main layout-->
+   
+    
+            <!--Section: Best Features-->
+            <section id="best-features" class="text-center">
+    
+                <!-- Heading -->
+                <h2 class="mb-5 font-weight-bold">Why our customers love us!</h2>
+    
+                <!--Grid row-->
+                <div class="row d-flex justify-content-center mb-4">
+    
+                    <!--Grid column-->
+                    <div class="col-md-8">
+    
+                        <!-- Description -->
+                        <p class="grey-text">We believe Buying, Selling or Trading should be done with ease, it should be
+                            hassle-free.
+                            This is the goal and we are winning everyday.
+                        </p>
+    
+                    </div>
+                    <!--Grid column-->
+    
+                </div>
+                <!--Grid row-->
+    
+                <!--Grid row-->
+                <div class="row">
+    
+                    <!--Grid column-->
+                    <div class="col-md-4 mb-1">
+                        <i class="fa fa-camera-retro fa-3x orange-text"></i>
+                        <h4 class="my-4">Experience</h4>
+                        <p class="grey-text">Our customers love us because of our simplicity, Intergrity, We keep our word.</p>
+                    </div>
+                    <!--Grid column-->
+    
+                    <!--Grid column-->
+                    <div class="col-md-4 mb-1">
+                        <i class="fa fa-heart fa-3x pink-text"></i>
+                        <h4 class="my-4">Happiness</h4>
+                        <p class="grey-text">Our customers sell on their terms. We remain just the means for you to make
+                            that sale.</p>
+                    </div>
+                    <!--Grid column-->
+    
+                    <!--Grid column-->
+                    <div class="col-md-4 mb-1">
+                        <i class="fa fa-bicycle fa-3x orange-text"></i>
+                        <h4 class="my-4">Speed</h4>
+                        <p class="grey-text">We deliver fast. We get you customers sooner than you think.</p>
+                    </div>
+                    <!--Grid column-->
+    
+                </div>
+                <!--Grid row-->
+    
+            </section>
+            <!--Section: Best Features-->
+    
+            <hr class="my-5">
+    
+            <!--Section: Examples-->
+            <section id="Top products this week" class="text-center">
+    
+                <h2 class="mb-5 font-weight-bold">Top products this week</h2>
+<!--Grid row-->
+<div class="row">
+{% for post in posts %}
+    <!--Grid column-->
+    <div class="col-lg-4 col-md-12 mb-4">
+
+        <div class="view overlay z-depth-1-half">
+            <img src="{{ post.images.url }}" class="img-fluid">
+            <a href="{% url 'post-detail' post.id %}">
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+
+        <h6 class="my-4 font-weight-bold">{{ post.price }}</h6>
+        <h6><a class="my-4 font-weight-bold" href="{% url 'post-detail' post.id %} ">{{ post.name }}</a></h6>
+
+    </div>
+
+    <!--Grid column-->
+    {% endfor %}
+    </div>
+    </section>
+    
+         {% if is_paginated %}
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+            {% if page_obj.has_next %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+
+         {% endif %}
+    {% endblock content %}
+
